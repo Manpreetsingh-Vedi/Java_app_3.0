@@ -73,6 +73,15 @@ pipeline{
                }
             }
         }
+        stage('JFrog:Artifactoy'){
+         when { expression {  params.action == 'create' } }
+            steps{
+               script{
+                "cd target/ |Curl-X PUT-u admin-T kubernetes-configmap-reload-0.0.1-SNAPSHOT.jar http://54.183.141.240:8082/artifactory/example-repo-local/"
+                
+               }
+            }
+        }
         stage('Docker Image Build'){
          when { expression {  params.action == 'create' } }
             steps{
